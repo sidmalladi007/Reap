@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+
+    <title>Reap Detail Page</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <meta name="description" content="Reap Homepage">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/main2.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/landing-page.css' %}" />
+    <script type="text/javascript" src="{% static 'reap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'reap/js/bootstrap.min.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'reap/js/jquery.js' %}"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="{% static 'reap/js/jquery-2.1.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'reap/js/highcharts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'reap/js/exporting.js' %}"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        $('#container-graph').highcharts({
+            title: {
+                text: 'Customer Loyalty Trends for -- {{reward.title}}',
+                x: -20 //center
+            },
+            
+            xAxis: {
+                categories: ['10/12', '10/13', '10/14', '10/15', '10/16', '10/17', '10/18', '10/19', '10/20', '10/21', '10/22', '10/23',
+                    '10/24', '10/25']
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Availing Customers'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: ' Daily Rewarded Customers'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: ' Daily Rewarded Customers',
+                data: [0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 4, 7, 12]
+            }]
+        });
+    });
+            </script>
+
+    <script type="text/javascript">
+    $(function () {
+        $('#container-graph2').highcharts({
+            title: {
+                text: 'Cost Implications for -- {{reward.title}}',
+                x: -20 //center
+            },
+            
+            xAxis: {
+                categories: ['10/12', '10/13', '10/14', '10/15', '10/16', '10/17', '10/18', '10/19', '10/20', '10/21', '10/22', '10/23','10/24', '10/25']
+            },
+            yAxis: {
+                title: {
+                    text: 'Cost per day for rewards program'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: ' Dollars'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: ' Dollars',
+                data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.5, 4.5, 9.0, 9.0, 18.0, 31.5, 54.0]
+            }]
+        });
+    });
+            </script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="{% url 'reap:home' %}">Reap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'reap:myrewards' %}">My Rewards Program</a></li>
+                        {% else %}
+                        <li><a href="{% url 'reap:account' %}">My Rewards Program</a></li>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'reap:create' %}">New Incentive</a>
+                        {% else %}
+                        <a href="{% url 'reap:login' %}">New Incentive</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'reap:settings' %}">Settings</a></li>
+                        {% else %}
+                        <li><a href="{% url 'reap:account' %}">Sign In</a></li>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+<br><br><br><br><br>
+    <div class="container">
+      <div id="container-graph"></div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+    <h2 align="center" style="text-decoration:underline;">Verdict</h2>
+    <h3 style="font-size:1.3em;">Based on recent rewards trends and exponentially rising customer engagement rates, it's recommended that you continue this campaign.</h3><br><br><br>
+    </div>
+
+    <div class="container">
+      <div id="container-graph2"></div>
+    </div>
+
+</div>
+
+</body>

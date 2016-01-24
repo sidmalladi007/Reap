@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+
+    <title>Reap Rewards</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <meta name="description" content="Reap My Rewards">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'reap/css/landing-page.css' %}" />
+    <script type="text/javascript" src="{% static 'reap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'reap/js/bootstrap.min.js' %}"></script> 
+    <script type="text/javascript" src="{% static 'reap/js/jquery.js' %}"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="{% url 'reap:home' %}">Reap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        {% if user.is_authenticated %}
+                        <li style="font-weight:bold;"><a href="{% url 'reap:myrewards' %}">My Rewards Program</a></li>
+                        {% else %}
+                        <li style="font-weight:bold;"><a href="{% url 'reap:account' %}">My Rewards Program</a></li>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'reap:create' %}">New Incentive</a>
+                        {% else %}
+                        <a href="{% url 'reap:account' %}">New Incentive</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'reap:settings' %}">Settings</a></li>
+                        {% else %}
+                        <li><a href="{% url 'reap:account' %}">Sign In</a></li>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <br>
+
+<br><br><br>
+<div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3  create-card">
+          <div class="panel panel-login">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h3 align="center">Create New Reward<h3>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <form id="register-form" action="{% url 'reap:add' %}" method="post" role="form" style="display: block;">
+                  {% csrf_token %}
+                    <div class="form-group">
+                      <label for="name">Reward Name</label>
+                      <input type="text" name="rewardname" id="rewardname" tabindex="1" class="form-control" placeholder="Name" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="unlock">Reward Unlocked At:</label>
+                      <input type="text" name="unlock" id="unlock" tabindex="1" class="form-control" placeholder="Dollar threshold when your customer is given the incentive" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="discount">Discount Value</label>
+                      <input type="text" name="discount" id="discount" tabindex="1" class="form-control" placeholder="Dollar value given to your customer upon reaching the threshold" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="starting">Begin This Incentive On:</label>
+                      <input type="datetime-local" name="starting" id="starting" tabindex="1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="ending">End This Incentive On:</label>
+                      <input type="datetime-local" name="ending" id="ending" tabindex="1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="details">Details</label>
+                      <textarea type="textarea" name="details" id="details" tabindex="2" rows="4" cols="60" class="form-control" placeholder="Enter additional information here"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" name="zuppl_submit" id="zuppl_submit" tabindex="4" class="form-control btn btn-primary" value="Confirm">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+
